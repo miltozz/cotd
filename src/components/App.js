@@ -25,6 +25,16 @@ class App extends Component {
       fishes
     });
   };
+
+  addToOrder = key => {
+    const order = { ...this.state.order };
+    // My code. Seems to work the same
+    // order[key] ? order[key]++ : (order[key] = 1);
+    order[key] = order[key] + 1 || 1;
+    this.setState({
+      order
+    });
+  };
   // ${<Fish fish={this.state.fishes[key]} />}
   render() {
     return (
@@ -33,11 +43,18 @@ class App extends Component {
           <Header tagline="Fresh From The Ocean" fishes={this.state.fishes} />
           <ul className="fishes">
             {Object.keys(this.state.fishes).map(key => {
-              return <Fish key={key} details={this.state.fishes[key]} />;
+              return (
+                <Fish
+                  key={key}
+                  index={key}
+                  details={this.state.fishes[key]}
+                  addToOrder={this.addToOrder}
+                />
+              );
             })}
           </ul>
         </div>
-        <Order />
+        <Order order={this.state.order} fishes = {this.state.fishes}/>
         <Inventory
           onAddFish={this.addFish}
           loadSampleFishes={this.loadSampleFishes}
