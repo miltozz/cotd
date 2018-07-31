@@ -5,6 +5,7 @@ import Order from "./Order";
 import sampleFishes from "../sample-fishes";
 import Fish from "./Fish";
 import base from "../base";
+import PropTypes from "prop-types";
 
 class App extends Component {
   state = {
@@ -12,8 +13,12 @@ class App extends Component {
     order: {}
   };
 
+  static propTypes = {
+    match: PropTypes.object
+  };
+
   componentDidMount() {
-    console.log("mount");
+//    console.log("mount");
 
     const localStorageRef = localStorage.getItem(
       this.props.match.params.storeId
@@ -64,8 +69,11 @@ class App extends Component {
 
     // console.log(fish);
     const fishes = { ...this.state.fishes };
+    // console.log(typeof(fishes[key].price));
+    // console.log(fishes[key].price);
+    // console.log(fish);
+
     fishes[key] = fish;
-    // console.log(fishes);
     this.setState({
       fishes
     });
@@ -126,6 +134,7 @@ class App extends Component {
           fishes={this.state.fishes}
           onUpdateFish={this.updateFish}
           onDeleteFish={this.deleteFish}
+          storeId={this.props.match.params.storeId}
         />
       </div>
     );
